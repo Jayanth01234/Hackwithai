@@ -546,6 +546,48 @@
     <!-- Toast Notification Container -->
     <div id="toastContainer" class="toast-container"></div>
 
+    <!-- Report Details Modal -->
+    <div id="reportDetailsModal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modalReportId">Report Details</h2>
+                <button class="close-modal" id="closeDetailsModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="report-meta-grid">
+                    <div class="meta-item">
+                        <span class="label">Audit Date</span>
+                        <span class="value" id="modalReportDate">--</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="label">Compliance Score</span>
+                        <span class="valueHighlight" id="modalReportScore">--</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="label">Risk Level</span>
+                        <span class="value" id="modalReportRisk">--</span>
+                    </div>
+                </div>
+                <h3>Violation Breakdown</h3>
+                <div class="table-container">
+                    <table class="details-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Violation</th>
+                                <th>Severity</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modalViolationsTableBody">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 

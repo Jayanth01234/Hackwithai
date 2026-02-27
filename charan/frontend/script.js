@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadRegulatorSettings();
     initTrainingModule();
     initFeedbackForm();
+    initModalClosing();
 });
 
 function initModules() {
@@ -466,10 +467,81 @@ function renderReports(data) {
             <td><span class="badge ${r.type.toLowerCase()}" style="padding:2px 8px; border-radius:4px; font-size:10px; background:#e2e8f0;">${r.type}</span></td>
             <td style="font-weight:800">${r.score}%</td>
             <td><span class="badge-risk risk-${r.risk}">${r.risk.toUpperCase()}</span></td>
-            <td><button class="btn btn-sm btn-outline" style="font-size:10px; padding:2px 8px">Details</button></td>
+            <td><button class="btn btn-sm btn-outline btn-details" data-id="${r.id}" style="font-size:10px; padding:2px 8px">Details</button></td>
         `;
         tbody.appendChild(tr);
     });
+
+    document.querySelectorAll('.btn-details').forEach(btn => {
+        btn.onclick = () => showReportDetails(btn.getAttribute('data-id'));
+    });
+}
+
+function initModalClosing() {
+    const modal = document.getElementById('reportDetailsModal');
+    const closeBtn = document.getElementById('closeDetailsModal');
+    if (!modal || !closeBtn) return;
+
+    closeBtn.onclick = () => modal.classList.add('hidden');
+    window.onclick = (event) => {
+        if (event.target === modal) modal.classList.add('hidden');
+    };
+}
+
+function showReportDetails(id) {
+    const modal = document.getElementById('reportDetailsModal');
+    if (!modal) return;
+
+    // Mock data for specific reports
+    const reportData = {
+        'HC-9921': {
+            date: '2023-11-01 14:30', score: 95, risk: 'LOW', violations: [
+                { cat: 'PPE', item: 'Hairnet', sev: 'Low', status: 'OK' },
+                { cat: 'PPE', item: 'Gloves', sev: 'Low', status: 'OK' },
+                { cat: 'Safety', item: 'Floor Dry', sev: 'Medium', status: 'OK' }
+            ]
+        },
+        'HC-9920': {
+            date: '2023-11-01 11:15', score: 58, risk: 'HIGH', violations: [
+                { cat: 'PPE', item: 'Face Mask', sev: 'High', status: 'VIOLATION' },
+                { cat: 'Hygiene', item: 'Handwashing', sev: 'High', status: 'VIOLATION' },
+                { cat: 'Safety', item: 'Zone Control', sev: 'Medium', status: 'OK' }
+            ]
+        },
+        'HC-9919': {
+            date: '2023-10-31 09:45', score: 72, risk: 'MEDIUM', violations: [
+                { cat: 'PPE', item: 'Apron', sev: 'Medium', status: 'VIOLATION' },
+                { cat: 'PPE', item: 'Hairnet', sev: 'Low', status: 'OK' },
+                { cat: 'Cleaning', item: 'Surface Sanitization', sev: 'High', status: 'OK' }
+            ]
+        }
+    };
+
+    const details = reportData[id] || { date: 'Unknown', score: 0, risk: 'UNKNOWN', violations: [] };
+
+    document.getElementById('modalReportId').textContent = `Report Details: #${id}`;
+    document.getElementById('modalReportDate').textContent = details.date;
+    document.getElementById('modalReportScore').textContent = `${details.score}%`;
+    document.getElementById('modalReportRisk').textContent = details.risk;
+
+    const vTbody = document.getElementById('modalViolationsTableBody');
+    vTbody.innerHTML = '';
+
+    details.violations.forEach(v => {
+        const tr = document.createElement('tr');
+        const statusClass = v.status === 'OK' ? 'status-check' : 'status-violation';
+        const severityClass = `severity-${v.sev.toLowerCase()}`;
+
+        tr.innerHTML = `
+            <td>${v.cat}</td>
+            <td style="font-weight:600">${v.item}</td>
+            <td><span class="severity-badge ${severityClass}">${v.sev}</span></td>
+            <td><span class="${statusClass}">${v.status === 'OK' ? '✓' : '✗'} ${v.status}</span></td>
+        `;
+        vTbody.appendChild(tr);
+    });
+
+    modal.classList.remove('hidden');
 }
 
 /*=============================================
