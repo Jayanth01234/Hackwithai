@@ -1768,3 +1768,71 @@ input:checked+.slider-toggle:before {
     color: var(--danger);
     font-weight: 700;
 }
+/*=============================================
+=            Admin Dashboard Styles           =
+=============================================*/
+.live-monitoring-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 1.5rem;
+}
+
+.cctv-grid-container {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: var(--shadow-lg);
+    border: 4px solid var(--sidebar-bg);
+}
+
+.cctv-grid-img {
+    width: 100%;
+    display: block;
+    height: auto;
+}
+
+.action-buttons-stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.mini-alert-item {
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    border-left: 4px solid #ccc;
+    background: rgba(0,0,0,0.02);
+}
+
+.mini-alert-item.red {
+    border-left-color: var(--danger);
+    background: var(--danger-bg);
+}
+
+.mini-alert-item.green {
+    border-left-color: var(--success);
+    background: var(--success-bg);
+}
+
+.mini-alert-item span {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.mini-alert-item p {
+    font-size: 0.85rem;
+    margin-top: 2px;
+}
+
+/* Role helper classes */
+.admin-only, .hotel-only {
+    display: none; /* Controlled by JS handleRoleSpecificUI */
+}
+

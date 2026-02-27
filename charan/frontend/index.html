@@ -26,13 +26,19 @@
                 <a href="#" class="nav-item active" data-target="welcome-module">
                     <span class="icon">🏠</span> Home
                 </a>
-                <a href="#" class="nav-item" data-target="dashboard-module">
+                <a href="#" class="nav-item admin-only" data-target="admin-overview-module">
+                    <span class="icon">🏢</span> Admin Overview
+                </a>
+                <a href="#" class="nav-item admin-only" data-target="live-monitoring-module">
+                    <span class="icon">👁️</span> Live Monitoring
+                </a>
+                <a href="#" class="nav-item hotel-only" data-target="dashboard-module">
                     <span class="icon">📊</span> Dashboard
                 </a>
-                <a href="#" class="nav-item" data-target="image-module">
+                <a href="#" class="nav-item hotel-only" data-target="image-module">
                     <span class="icon">📸</span> Image Audit
                 </a>
-                <a href="#" class="nav-item" data-target="video-module">
+                <a href="#" class="nav-item hotel-only" data-target="video-module">
                     <span class="icon">🎥</span> Video Audit
                 </a>
                 <a href="#" class="nav-item" data-target="batch-module">
@@ -41,8 +47,11 @@
                 <a href="#" class="nav-item" data-target="regulator-module">
                     <span class="icon">⚙️</span> Violation Regulator
                 </a>
-                <a href="#" class="nav-item" data-target="feedback-module">
+                <a href="#" class="nav-item hotel-only" data-target="feedback-module">
                     <span class="icon">💬</span> Feedback
+                </a>
+                <a href="#" class="nav-item" id="logoutBtn">
+                    <span class="icon">🚪</span> Logout
                 </a>
             </nav>
             <div class="sidebar-footer">
@@ -178,6 +187,131 @@
                     </div>
                 </div>
 
+            </section>
+
+            <!-- Admin Overview Module -->
+            <section id="admin-overview-module" class="module">
+                <header class="module-header">
+                    <h1>Enterprise Compliance Overview</h1>
+                    <p>Aggregated data across all listed restaurants.</p>
+                </header>
+
+                <div class="kpi-grid">
+                    <div class="card kpi-card">
+                        <div class="kpi-info">
+                            <span class="kpi-label">Active Restaurants</span>
+                            <h2 class="kpi-value" data-target="42">0</h2>
+                        </div>
+                        <div class="kpi-icon blue">🏢</div>
+                    </div>
+                    <div class="card kpi-card">
+                        <div class="kpi-info">
+                            <span class="kpi-label">Avg. Fleet Score</span>
+                            <h2 class="kpi-value" data-target="82">0</h2>
+                            <span class="kpi-suffix">%</span>
+                        </div>
+                        <div class="kpi-icon green">📈</div>
+                    </div>
+                    <div class="card kpi-card">
+                        <div class="kpi-info">
+                            <span class="kpi-label">Pending Violations</span>
+                            <h2 class="kpi-value text-danger" data-target="28">0</h2>
+                        </div>
+                        <div class="kpi-icon red">🚨</div>
+                    </div>
+                    <div class="card kpi-card">
+                        <div class="kpi-info">
+                            <span class="kpi-label">Inspections Completed</span>
+                            <h2 class="kpi-value text-success" data-target="1104">0</h2>
+                        </div>
+                        <div class="kpi-icon cyan">✅</div>
+                    </div>
+                </div>
+
+                <div class="card table-card">
+                    <h3>Restaurant Risk Rankings</h3>
+                    <table class="reports-table">
+                        <thead>
+                            <tr>
+                                <th>Restaurant Name</th>
+                                <th>Last Audit</th>
+                                <th>Score</th>
+                                <th>Risk Level</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hygiene Auditor Kitchen</td>
+                                <td>2023-11-01</td>
+                                <td>86%</td>
+                                <td><span class="badge-risk risk-low">LOW</span></td>
+                                <td><span class="status-check">✓ Active</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ocean View Dining</td>
+                                <td>2023-11-01</td>
+                                <td>58%</td>
+                                <td><span class="badge-risk risk-high">HIGH</span></td>
+                                <td><span class="status-violation">✗ Action Req.</span></td>
+                            </tr>
+                            <tr>
+                                <td>Central Mall Food Court</td>
+                                <td>2023-10-31</td>
+                                <td>72%</td>
+                                <td><span class="badge-risk risk-medium">MEDIUM</span></td>
+                                <td><span class="status-check">✓ Monitored</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Live Monitoring Module -->
+            <section id="live-monitoring-module" class="module">
+                <header class="module-header">
+                    <h1>Live Fleet Monitoring</h1>
+                    <p>Real-time surveillance from all registered facility cameras.</p>
+                </header>
+
+                <div class="live-monitoring-layout">
+                    <div class="card live-grid-card">
+                        <h3>CCTV Live Feeds</h3>
+                        <div class="cctv-grid-container">
+                            <img src="cctv_grid_mockup_1772208746492.png" alt="CCTV Grid" class="cctv-grid-img">
+                        </div>
+                    </div>
+
+                    <div class="card admin-actions-sidebar">
+                        <h3>Quick Actions</h3>
+                        <p class="text-muted mb-3" style="font-size: 0.85rem">Selected Feed: Kitchen B (Ocean View)</p>
+                        <div class="action-buttons-stack">
+                            <button class="btn btn-primary btn-block mb-3"
+                                onclick="showToast('Protocol Initiated: Manager Notified', 'success')">
+                                🔔 Notify Local Manager
+                            </button>
+                            <button class="btn btn-danger btn-block mb-3"
+                                onclick="showToast('Warning: Violations Logged', 'error')">
+                                ⚠️ Issue Official Warning
+                            </button>
+                            <button class="btn btn-outline btn-block"
+                                onclick="showToast('Audit report scheduled', 'info')">
+                                📝 Schedule On-site Audit
+                            </button>
+                        </div>
+                        <div class="recent-live-alerts mt-4">
+                            <h4>Recent Stream Alerts</h4>
+                            <div class="mini-alert-item red">
+                                <span>2m ago</span>
+                                <p>Mask Violation detected in Kitchen B</p>
+                            </div>
+                            <div class="mini-alert-item green">
+                                <span>5m ago</span>
+                                <p>Handwashing protocol verified in Kitchen A</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- 2. Image Audit Module -->

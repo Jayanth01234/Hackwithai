@@ -1,5 +1,6 @@
 // State management and initialization
 document.addEventListener('DOMContentLoaded', () => {
+    checkAuth();
     initNavigation();
     initMobileNav();
     initDashboard();
@@ -8,7 +9,45 @@ document.addEventListener('DOMContentLoaded', () => {
     initTrainingModule();
     initFeedbackForm();
     initModalClosing();
+    handleRoleSpecificUI();
 });
+
+function checkAuth() {
+    const role = localStorage.getItem('hc_user_role');
+    if (!role && !window.location.pathname.includes('login.html')) {
+        window.location.href = 'login.html';
+    }
+}
+
+function logout() {
+    localStorage.removeItem('hc_user_role');
+    localStorage.removeItem('hc_user_name');
+    window.location.href = 'login.html';
+}
+
+function handleRoleSpecificUI() {
+    const role = localStorage.getItem('hc_user_role');
+    const userName = localStorage.getItem('hc_user_name') || 'User';
+    
+    // Update labels or headers if needed
+    const welcomeHeader = document.querySelector('.welcome-header h1');
+    if (welcomeHeader) {
+        welcomeHeader.innerHTML = `Welcome back, <span class="accent">${userName}</span>`;
+    }
+
+    // Hide/Show items based on role
+    const adminItems = document.querySelectorAll('.admin-only');
+    const hotelItems = document.querySelectorAll('.hotel-only');
+
+    if (role === 'admin') {
+        adminItems.forEach(el => el.style.display = 'flex');
+        hotelItems.forEach(el => el.style.display = 'none');
+        // If on welcome module, maybe show different cards
+    } else {
+        adminItems.forEach(el => el.style.display = 'none');
+        hotelItems.forEach(el => el.style.display = 'flex');
+    }
+}
 
 function initModules() {
     // General module initializer
@@ -56,6 +95,14 @@ function initNavigation() {
         logoLink.addEventListener('click', (e) => {
             e.preventDefault();
             switchModule(logoLink.getAttribute('data-target'));
+        });
+    }
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
         });
     }
 }
