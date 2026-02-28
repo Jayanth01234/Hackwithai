@@ -1,0 +1,2 @@
+PPE: {0: 'person', 1: 'gloves', 2: 'no_gloves', 3: 'mask', 4: 'medical_cap'}
+Kitchen: {0: 'Fire', 1: 'Smoke', 2: 'apron', 3: 'mask_weared_incorrect', 4: 'no_apron', 5: 'object', 6: 'with_mask', 7: 'without_mask'}
